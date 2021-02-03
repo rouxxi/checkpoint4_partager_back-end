@@ -1,7 +1,6 @@
 const router = require('express').Router();
+const usersController = require('../../controllers/usersController')
 
-router.get('/', (req, res) => {
-    res.status(200).send('gg tue est aux users')
-})
+router.get('/', usersController.findAll)
 
 module.exports = router;
