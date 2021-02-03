@@ -3,10 +3,13 @@ const app = express();
 const port = 8080
 const route = require('./router/index');
 
-app.listen(port, () => {
-    console.log(`Vous etes bien sur le port: ${port}`)
+app.listen(port, (error) => {
+    error
+        ?
+        console.log(error) :
+        console.log(`Vous etes bien sur le port: ${port}`)
 })
 
-app.use('/', route)
+app.use('/api', route)
 
 module.exports = app;
