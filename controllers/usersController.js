@@ -48,20 +48,18 @@ usersController.login = (req, res) => {
             if (result.length < 1) {
                 res.status(403).send('Email non enregistré !')
             } else {
-                bcrypt.hash(password, 10, function(errors, hash) {
-                    bcrypt.compare(result[0].password, hash, function(error, resu) {
-                        if (resu) {
-                            const token = jwt.sign({ user: result[0].id }, process.env.JWT, { expiresIn: '1h', })
-                            res.status(200).send({
-                                success: true,
-                                message: `Bienvenu ${result[0].nickName}`,
-                                user: {...result[0], password: 'hidden' },
-                                token: token
-                            })
-                        } else {
-                            res.status(403).send('Mot de pass incorrect !')
-                        }
-                    });
+                bcrypt.compare(password, result[0].password, function(error, resu) {
+                    if (resu) {
+                        const token = jwt.sign({ user: result[0].id }, process.env.JWT, { expiresIn: '1h', })
+                        res.status(200).send({
+                            success: true,
+                            message: `Bienvenu ${result[0].nickName}`,
+                            user: {...result[0], password: 'hidden' },
+                            token: token
+                        })
+                    } else {
+                        res.status(403).send('Mot de pass incorrect !')
+                    }
                 });
             }
         }
