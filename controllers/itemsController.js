@@ -26,7 +26,7 @@ itemsController.createItem = (req, res) => {
 itemsController.itemBought = (req, res) => {
     const { idItems, idUser } = req.body;
 
-    connection.query('UPDATE item SET buyer = ? WHERE iditem =? ', [idUser, idItems], (error, result) => {
+    connection.query('UPDATE item SET buyer = ? WHERE iditem = ? ', [idUser, idItems], (error, result) => {
         if (error) {
             res.status(500).send(error)
         } else {
