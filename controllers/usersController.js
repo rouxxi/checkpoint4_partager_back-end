@@ -38,6 +38,37 @@ usersController.createUser = (req, res) => {
 
 };
 
+usersController.boughtItems = (req, res) => {
+    const { id } = req.params;
+    const { totalPrice } = req.body;
+    connection.query('UPDATE user SET money = ?  WHERE iduser = ?', [parseFloat(totalPrice), parseInt(id)], (error, result) => {
+        if (error) {
+            res.status(500).send(error)
+        } else {
+            res.status(200).send(result)
+        }
+    })
+
+
+};
+
+
+usersController.profilUpdate = (req, res) => {
+    const { idUser } = req.params;
+    const { firstName, lastName, nickName, email, password } = req.body;
+    connection.query('UPDATE user SET firstName = ?,  lastName = ?, nickName = ? , email = ?  WHERE iduser = ?', [firstName, lastName, nickName, email, parseInt(idUser)], (error, result) => {
+        if (error) {
+            res.status(500).send(error)
+        } else {
+            res.status(200).send(result.map((user) => {
+                return {...user, password: 'hidden' };
+            }))
+        }
+    })
+
+
+};
+
 usersController.login = (req, res) => {
     const { email, password } = req.body;
 
