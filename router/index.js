@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('express').Router({ mergeParams: true });
 const users = require('./users/index');
 const items = require('./items/index');
 
